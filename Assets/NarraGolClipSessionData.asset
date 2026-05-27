@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40da8bb0703545d4381a982d68c4fec3, type: 3}
+  m_Name: NarraGolClipSessionData
+  m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.Core.NarraGolClipSessionData
+  selectedVideoFileName: jugada_01.mp4
+  selectedVideoPath: D:\Unity\xrlab.dev\NarraGol\Videos\jugada_01.mp4
+  generatedWavPath: 
+  finalVideoFileName: 
