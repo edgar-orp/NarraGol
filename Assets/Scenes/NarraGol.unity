@@ -219,13 +219,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2089697022}
     m_Modifications:
+    - target: {fileID: 546656689604224148, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: a0bfb2ddb7096fa40b09db5d13473436, type: 3}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_Name
       value: 03_Preview
       objectReference: {fileID: 0}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -378,7 +382,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 286c1a5a36bde5a46872c45cbf913c85, type: 3}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_ControlledAudioTrackCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_DirectAudioMutes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_DirectAudioVolumes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_EnabledAudioTracks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_TargetAudioSources.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6086153258060599142, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_Pivot.x
@@ -618,6 +646,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2089697022}
     m_Modifications:
+    - target: {fileID: 546656689604224148, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 2983cd03f687eb247bf2ca726ed41c8a, type: 3}
+    - target: {fileID: 698675127780240892, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_Name
       value: 01_Tutorial
@@ -904,8 +940,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234, y: 9}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: -226, y: -154}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572934249
 MonoBehaviour:
@@ -988,7 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1178,8 +1214,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234, y: -453}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: -226, y: -559}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1065383444
 MonoBehaviour:
@@ -1262,7 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1503,8 +1539,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246, y: 463}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: 223, y: 237}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1227355493
 MonoBehaviour:
@@ -1587,7 +1623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1713,8 +1749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246, y: 9}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: 223, y: -154}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1386699845
 MonoBehaviour:
@@ -1797,7 +1833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1997,8 +2033,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234, y: 463}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: -229, y: 240}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1965763253
 MonoBehaviour:
@@ -2081,7 +2117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2156,8 +2192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246, y: -453}
-  m_SizeDelta: {x: 350, y: 350}
+  m_AnchoredPosition: {x: 223, y: -563}
+  m_SizeDelta: {x: 403.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033343237
 MonoBehaviour:
@@ -2240,7 +2276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2404,13 +2440,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2089697022}
     m_Modifications:
+    - target: {fileID: 546656689604224148, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: a282e87229b1c36479d8fd21881cff0f, type: 3}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_Name
       value: 00_Idle
       objectReference: {fileID: 0}
     - target: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
