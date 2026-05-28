@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using dev.xrlab.NarraGol.Video;
 
 namespace dev.xrlab.NarraGol.Core
@@ -11,11 +11,13 @@ namespace dev.xrlab.NarraGol.Core
         [SerializeField] private GameObject tutorialScreen;
         [SerializeField] private GameObject selectionScreen;
         [SerializeField] private GameObject previewScreen;
-        [SerializeField] private GameObject recordingScreen;
-        [SerializeField] private GameObject resultScreen;
 
         [Header("Scripts")]
         [SerializeField] private PreviewVideoController previewVideoController;
+
+        [Header("Scenes")]
+        [SerializeField] private string recordingSceneName = "RecordingScene";
+
         public AppScreen CurrentScreen { get; private set; }
 
         private void Start()
@@ -45,39 +47,23 @@ namespace dev.xrlab.NarraGol.Core
             previewVideoController?.LoadSelectedVideo();
         }
 
-        public void ShowRecording()
+        public void LoadRecordingScene()
         {
             previewVideoController?.StopVideo();
 
-            SetScreen(AppScreen.Recording);
-        }
+            Debug.Log($"Loading Scene: {recordingSceneName}");
 
-        public void ShowResult()
-        {
-            SetScreen(AppScreen.Result);
+            SceneManager.LoadScene(recordingSceneName);
         }
 
         private void SetScreen(AppScreen screen)
         {
             CurrentScreen = screen;
 
-            if (idleScreen != null)
-                idleScreen.SetActive(screen == AppScreen.Idle);
-
-            if (tutorialScreen != null)
-                tutorialScreen.SetActive(screen == AppScreen.Tutorial);
-
-            if (selectionScreen != null)
-                selectionScreen.SetActive(screen == AppScreen.Selection);
-
-            if (previewScreen != null)
-                previewScreen.SetActive(screen == AppScreen.Preview);
-
-            if (recordingScreen != null)
-                recordingScreen.SetActive(screen == AppScreen.Recording);
-
-            if (resultScreen != null)
-                resultScreen.SetActive(screen == AppScreen.Result);
+            idleScreen?.SetActive(screen == AppScreen.Idle);
+            tutorialScreen?.SetActive(screen == AppScreen.Tutorial);
+            selectionScreen?.SetActive(screen == AppScreen.Selection);
+            previewScreen?.SetActive(screen == AppScreen.Preview);
 
             Debug.Log($"Current Screen: {CurrentScreen}");
         }

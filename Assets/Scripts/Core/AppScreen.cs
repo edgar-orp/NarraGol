@@ -5,8 +5,6 @@ namespace dev.xrlab.NarraGol.Core
         Idle,
         Tutorial,
         Selection,
-        Preview,
-        Recording,
-        Result
+        Preview
     }
 }
