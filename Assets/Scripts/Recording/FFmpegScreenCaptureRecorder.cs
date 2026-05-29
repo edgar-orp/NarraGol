@@ -17,7 +17,7 @@ namespace dev.xrlab.NarraGol.Recording
         [Header("Capture Settings")]
         [SerializeField] private int frameRate = 30;
 
-        [Tooltip("Leave empty to use the default Windows microphone.")]
+        [Tooltip("Leave empty to auto-detect the first FFmpeg DirectShow audio device.")]
         [SerializeField] private string microphoneDeviceName;
 
 #if !UNITY_EDITOR
@@ -63,11 +63,13 @@ namespace dev.xrlab.NarraGol.Recording
             string videoInput = GetVideoInputArguments();
             string resolvedMicrophoneName = GetResolvedMicrophoneName();
 
-            string audioInput =
-                $"-f dshow -i audio=\"{resolvedMicrophoneName}\" ";
+            string audioInput = string.IsNullOrWhiteSpace(resolvedMicrophoneName)
+                ? string.Empty
+                : $"-f dshow -i audio=\"{resolvedMicrophoneName}\" ";
 
-            string audioCodec =
-                "-c:a aac -b:a 192k ";
+            string audioCodec = string.IsNullOrWhiteSpace(resolvedMicrophoneName)
+                ? string.Empty
+                : "-c:a aac -b:a 192k ";
 
             string arguments =
                 $"-y " +
@@ -124,14 +126,92 @@ namespace dev.xrlab.NarraGol.Recording
 
         private string GetResolvedMicrophoneName()
         {
-            if (string.IsNullOrWhiteSpace(microphoneDeviceName))
+            if (!string.IsNullOrWhiteSpace(microphoneDeviceName))
             {
-                UnityEngine.Debug.Log("Using default Windows microphone for FFmpeg capture.");
-                return "default";
+                UnityEngine.Debug.Log($"Using configured FFmpeg microphone: {microphoneDeviceName}");
+                return microphoneDeviceName;
             }
 
-            UnityEngine.Debug.Log($"Using configured FFmpeg microphone: {microphoneDeviceName}");
-            return microphoneDeviceName;
+            string detectedMicrophone = GetFirstDirectShowAudioDevice();
+
+            if (!string.IsNullOrWhiteSpace(detectedMicrophone))
+            {
+                UnityEngine.Debug.Log($"Using auto-detected FFmpeg microphone: {detectedMicrophone}");
+                return detectedMicrophone;
+            }
+
+            UnityEngine.Debug.LogWarning("No FFmpeg microphone detected. Capture will continue without audio.");
+            return string.Empty;
+        }
+
+        private string GetFirstDirectShowAudioDevice()
+        {
+            string resolvedFFmpegPath = GetResolvedFFmpegPath();
+
+            if (!File.Exists(resolvedFFmpegPath))
+            {
+                Fail($"FFmpeg executable not found while listing devices: {resolvedFFmpegPath}");
+                return string.Empty;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = resolvedFFmpegPath,
+                Arguments = "-hide_banner -list_devices true -f dshow -i dummy",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            try
+            {
+                using Process process = new Process();
+                process.StartInfo = startInfo;
+
+                process.Start();
+
+                string output = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                UnityEngine.Debug.Log("================================");
+                UnityEngine.Debug.Log("FFMPEG DIRECTSHOW DEVICES");
+                UnityEngine.Debug.Log(output);
+                UnityEngine.Debug.Log("================================");
+
+                string[] lines = output.Split('\n');
+
+                foreach (string rawLine in lines)
+                {
+                    string line = rawLine.Trim();
+
+                    if (!line.Contains("(audio)"))
+                        continue;
+
+                    if (line.Contains("Alternative name"))
+                        continue;
+
+                    int firstQuote = line.IndexOf('"');
+                    int secondQuote = line.IndexOf('"', firstQuote + 1);
+
+                    if (firstQuote >= 0 && secondQuote > firstQuote)
+                    {
+                        string deviceName = line.Substring(
+                            firstQuote + 1,
+                            secondQuote - firstQuote - 1
+                        );
+
+                        UnityEngine.Debug.Log($"First FFmpeg audio device found: {deviceName}");
+                        return deviceName;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"Could not list FFmpeg devices: {e.Message}");
+            }
+
+            return string.Empty;
         }
 
         private void StartFFmpeg(string arguments)
