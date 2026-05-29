@@ -37,5 +37,30 @@ namespace dev.xrlab.NarraGol.Utility
                 fileName
             );
         }
+
+        public static string GetOutputFolder()
+        {
+            string path = Path.Combine(
+                GetAppRootFolder(),
+                "Output"
+            );
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Debug.Log($"Created Output folder: {path}");
+            }
+
+            return path;
+        }
+
+        public static string GetFFmpegPath()
+        {
+            return Path.Combine(
+                GetAppRootFolder(),
+                "FFmpeg",
+                "ffmpeg.exe"
+            );
+        }
     }
 }
