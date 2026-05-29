@@ -375,6 +375,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1049512736}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadApplication
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: dev.xrlab.NarraGol.Recording.RecordingSceneController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6086153258060599142, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -515,11 +543,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.Recording.RecordingSceneController
   sessionData: {fileID: 11400000, guid: 8f9377d96eea58b438286e13a1fece65, type: 2}
   selectedVideoPlayer: {fileID: 1352005813}
+  farewellScreen: {fileID: 1050687717}
   webcamController: {fileID: 1140129787}
   microphoneMonitor: {fileID: 1228200637}
   screenCaptureRecorder: {fileID: 1385836436}
   countdownSeconds: 10
   recordingDurationSeconds: 10
+--- !u!1 &1050687717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+  m_PrefabInstance: {fileID: 948231069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1074482592
 GameObject:
   m_ObjectHideFlags: 0

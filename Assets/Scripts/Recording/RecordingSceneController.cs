@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
 using dev.xrlab.NarraGol.Core;
@@ -14,6 +15,9 @@ namespace dev.xrlab.NarraGol.Recording
 
         [Header("Video")]
         [SerializeField] private VideoPlayer selectedVideoPlayer;
+
+        [Header("Screens")]
+        [SerializeField] private GameObject farewellScreen;
 
         [Header("Controllers")]
         [SerializeField] private WebcamController webcamController;
@@ -35,8 +39,9 @@ namespace dev.xrlab.NarraGol.Recording
 
         private void InitializeRecordingScene()
         {
-            webcamController?.StartWebcam();
+            farewellScreen?.SetActive(false);
 
+            webcamController?.StartWebcam();
             microphoneMonitor?.StartListening();
 
             LoadSelectedVideo();
@@ -104,7 +109,6 @@ namespace dev.xrlab.NarraGol.Recording
             yield return new WaitForSeconds(countdownSeconds);
 
             ActivateSelectedVideoAndPlay();
-
             StartScreenRecording();
         }
 
@@ -161,14 +165,26 @@ namespace dev.xrlab.NarraGol.Recording
         private void FinishRecordingSequence()
         {
             selectedVideoPlayer?.Stop();
+            SetSelectedVideoVisible(false);
+
+            webcamController?.StopWebcam();
+            microphoneMonitor?.StopListening();
 
             isScreenRecording = false;
             isSequenceRunning = false;
 
+            farewellScreen?.SetActive(true);
+
             Debug.Log("================================");
             Debug.Log("RECORDING SEQUENCE FINISHED");
             Debug.Log($"Output Path: {currentOutputPath}");
+            Debug.Log("FAREWELL SCREEN ACTIVATED");
             Debug.Log("================================");
+        }
+
+        public void ReloadApplication()
+        {
+            SceneManager.LoadScene(0);
         }
 
         private void SetSelectedVideoVisible(bool visible)
