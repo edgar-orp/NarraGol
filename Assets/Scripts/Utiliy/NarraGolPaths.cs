@@ -62,5 +62,29 @@ namespace dev.xrlab.NarraGol.Utility
                 "ffmpeg.exe"
             );
         }
+
+        public static string GetImagesFolder()
+        {
+            string path = Path.Combine(
+                GetAppRootFolder(),
+                "Images"
+            );
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Debug.Log($"Created Images folder: {path}");
+            }
+
+            return path;
+        }
+
+        public static string GetImagePath(string fileName)
+        {
+            return Path.Combine(
+                GetImagesFolder(),
+                fileName
+            );
+        }
     }
 }

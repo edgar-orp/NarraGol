@@ -1,6 +1,7 @@
+using dev.xrlab.NarraGol.UI;
+using dev.xrlab.NarraGol.Video;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using dev.xrlab.NarraGol.Video;
 
 namespace dev.xrlab.NarraGol.Core
 {
@@ -15,10 +16,22 @@ namespace dev.xrlab.NarraGol.Core
         [Header("Scripts")]
         [SerializeField] private PreviewVideoController previewVideoController;
 
+        [SerializeField] private PreviewTitleImageController previewTitleImageController;
+
         [Header("Scenes")]
         [SerializeField] private string recordingSceneName = "RecordingScene";
 
         public AppScreen CurrentScreen { get; private set; }
+
+        private void OnEnable()
+        {
+            PreviewVideoController.OnPreviewFinished += LoadRecordingScene;
+        }
+
+        private void OnDisable()
+        {
+            PreviewVideoController.OnPreviewFinished -= LoadRecordingScene;
+        }
 
         private void Start()
         {
@@ -44,6 +57,7 @@ namespace dev.xrlab.NarraGol.Core
         {
             SetScreen(AppScreen.Preview);
 
+            previewTitleImageController?.LoadTitleImage();
             previewVideoController?.LoadSelectedVideo();
         }
 

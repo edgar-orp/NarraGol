@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using dev.xrlab.NarraGol.Utility;
 
 namespace dev.xrlab.NarraGol.Recording
@@ -20,13 +21,13 @@ namespace dev.xrlab.NarraGol.Recording
         [Tooltip("Leave empty to auto-detect the first FFmpeg DirectShow audio device.")]
         [SerializeField] private string microphoneDeviceName;
 
-#if !UNITY_EDITOR
-        [Header("Build Window Capture")]
-        [SerializeField] private string buildWindowTitle = "NarraGol";
-#endif
+        [Header("Output Resolution")]
+        [SerializeField] private int outputWidth = 1080;
+        [SerializeField] private int outputHeight = 1920;
 
         private Process ffmpegProcess;
         private string currentOutputPath;
+        private readonly StringBuilder ffmpegLogBuilder = new StringBuilder();
 
         public bool IsCapturing => ffmpegProcess != null && !ffmpegProcess.HasExited;
 
@@ -59,6 +60,7 @@ namespace dev.xrlab.NarraGol.Recording
             }
 
             currentOutputPath = outputPath;
+            ffmpegLogBuilder.Clear();
 
             string videoInput = GetVideoInputArguments();
             string resolvedMicrophoneName = GetResolvedMicrophoneName();
@@ -71,57 +73,37 @@ namespace dev.xrlab.NarraGol.Recording
                 ? string.Empty
                 : "-c:a aac -b:a 192k ";
 
+            string mapArguments = string.IsNullOrWhiteSpace(resolvedMicrophoneName)
+                ? "-map 0:v:0 "
+                : "-map 0:v:0 -map 1:a:0 ";
+
             string arguments =
                 $"-y " +
+                $"-loglevel verbose " +
                 $"{videoInput}" +
                 $"{audioInput}" +
                 $"-t {durationSeconds} " +
+                $"{mapArguments}" +
+                $"-vf \"scale={outputWidth}:{outputHeight}\" " +
                 $"-c:v libx264 " +
                 $"-preset veryfast " +
                 $"-pix_fmt yuv420p " +
                 $"{audioCodec}" +
+                $"-movflags +faststart " +
                 $"\"{outputPath}\"";
 
             StartFFmpeg(arguments);
         }
 
-        public void StopCapture()
-        {
-            if (!IsCapturing)
-                return;
-
-            try
-            {
-                ffmpegProcess.StandardInput.WriteLine("q");
-                UnityEngine.Debug.Log("FFmpeg stop signal sent.");
-            }
-            catch
-            {
-                try
-                {
-                    ffmpegProcess.Kill();
-                    UnityEngine.Debug.LogWarning("FFmpeg process killed.");
-                }
-                catch (Exception e)
-                {
-                    Fail($"Could not stop FFmpeg: {e.Message}");
-                }
-            }
-        }
-
         private string GetVideoInputArguments()
         {
-#if UNITY_EDITOR
             return
                 $"-f gdigrab " +
                 $"-framerate {frameRate} " +
+                $"-video_size {outputWidth}x{outputHeight} " +
+                $"-offset_x 0 " +
+                $"-offset_y 0 " +
                 $"-i desktop ";
-#else
-            return
-                $"-f gdigrab " +
-                $"-framerate {frameRate} " +
-                $"-i title=\"{buildWindowTitle}\" ";
-#endif
         }
 
         private string GetResolvedMicrophoneName()
@@ -179,9 +161,7 @@ namespace dev.xrlab.NarraGol.Recording
                 UnityEngine.Debug.Log(output);
                 UnityEngine.Debug.Log("================================");
 
-                string[] lines = output.Split('\n');
-
-                foreach (string rawLine in lines)
+                foreach (string rawLine in output.Split('\n'))
                 {
                     string line = rawLine.Trim();
 
@@ -247,16 +227,13 @@ namespace dev.xrlab.NarraGol.Recording
 
             try
             {
-                UnityEngine.Debug.Log("================================");
-                UnityEngine.Debug.Log("STARTING SCREEN CAPTURE");
-                UnityEngine.Debug.Log($"FFmpeg Path: {resolvedFFmpegPath}");
-#if UNITY_EDITOR
-                UnityEngine.Debug.Log("Capture Target: Desktop / Unity Editor");
-#else
-                UnityEngine.Debug.Log($"Capture Target: Window Title / {buildWindowTitle}");
-#endif
-                UnityEngine.Debug.Log($"Arguments: {arguments}");
-                UnityEngine.Debug.Log("================================");
+                AppendFFmpegLog("================================");
+                AppendFFmpegLog("STARTING SCREEN CAPTURE");
+                AppendFFmpegLog($"FFmpeg Path: {resolvedFFmpegPath}");
+                AppendFFmpegLog("Capture Target: Single fullscreen display");
+                AppendFFmpegLog($"Capture Size: {outputWidth}x{outputHeight}");
+                AppendFFmpegLog($"Arguments: {arguments}");
+                AppendFFmpegLog("================================");
 
                 ffmpegProcess.Start();
                 ffmpegProcess.BeginOutputReadLine();
@@ -266,6 +243,30 @@ namespace dev.xrlab.NarraGol.Recording
             {
                 CleanupProcess();
                 Fail($"Failed to start FFmpeg: {e.Message}");
+            }
+        }
+
+        public void StopCapture()
+        {
+            if (!IsCapturing)
+                return;
+
+            try
+            {
+                ffmpegProcess.StandardInput.WriteLine("q");
+                UnityEngine.Debug.Log("FFmpeg stop signal sent.");
+            }
+            catch
+            {
+                try
+                {
+                    ffmpegProcess.Kill();
+                    UnityEngine.Debug.LogWarning("FFmpeg process killed.");
+                }
+                catch (Exception e)
+                {
+                    Fail($"Could not stop FFmpeg: {e.Message}");
+                }
             }
         }
 
@@ -287,13 +288,13 @@ namespace dev.xrlab.NarraGol.Recording
         private void HandleOutputData(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.Data))
-                UnityEngine.Debug.Log(e.Data);
+                AppendFFmpegLog(e.Data);
         }
 
         private void HandleErrorData(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.Data))
-                UnityEngine.Debug.Log(e.Data);
+                AppendFFmpegLog(e.Data);
         }
 
         private void HandleProcessExited(object sender, EventArgs e)
@@ -302,6 +303,7 @@ namespace dev.xrlab.NarraGol.Recording
             string outputPath = currentOutputPath;
 
             CleanupProcess();
+            WriteFFmpegLogToFile();
 
             if (exitCode == 0 && File.Exists(outputPath))
             {
@@ -314,7 +316,32 @@ namespace dev.xrlab.NarraGol.Recording
             }
             else
             {
-                Fail($"FFmpeg failed. Exit Code: {exitCode}. Check FFmpeg log above.");
+                Fail($"FFmpeg failed. Exit Code: {exitCode}. Check Output/ffmpeg_capture_log.txt");
+            }
+        }
+
+        private void AppendFFmpegLog(string message)
+        {
+            ffmpegLogBuilder.AppendLine(message);
+            UnityEngine.Debug.Log(message);
+        }
+
+        private void WriteFFmpegLogToFile()
+        {
+            try
+            {
+                string logPath = Path.Combine(
+                    NarraGolPaths.GetOutputFolder(),
+                    "ffmpeg_capture_log.txt"
+                );
+
+                File.WriteAllText(logPath, ffmpegLogBuilder.ToString());
+
+                UnityEngine.Debug.Log($"FFmpeg log written to: {logPath}");
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"Could not write FFmpeg log file: {e.Message}");
             }
         }
 

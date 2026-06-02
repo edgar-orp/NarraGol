@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40da8bb0703545d4381a982d68c4fec3, type: 3}
   m_Name: NarraGolClipSessionData
   m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.Core.NarraGolClipSessionData
-  selectedVideoFileName: jugada_01.mp4
-  selectedVideoPath: D:\Unity\xrlab.dev\NarraGol\Videos\jugada_01.mp4
+  selectedVideoFileName: 
+  selectedVideoPath: 
   generatedWavPath: 
   finalVideoFileName: 

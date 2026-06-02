@@ -1,18 +1,27 @@
 using UnityEngine;
 using UnityEngine.Video;
+using System;
+using System.Collections;
 using dev.xrlab.NarraGol.Core;
 
 namespace dev.xrlab.NarraGol.Video
 {
     public class PreviewVideoController : MonoBehaviour
     {
+        public static event Action OnPreviewFinished;
+
         [Header("Data")]
         [SerializeField] private NarraGolClipSessionData sessionData;
 
         [Header("Video")]
         [SerializeField] private VideoPlayer videoPlayer;
 
+        [Header("Preview Settings")]
+        [SerializeField] private float previewDurationSeconds = 20f;
+
         private bool isPrepared;
+        private bool hasStarted;
+        private Coroutine previewRoutine;
 
         public void LoadSelectedVideo()
         {
@@ -34,13 +43,14 @@ namespace dev.xrlab.NarraGol.Video
                 return;
             }
 
-            videoPlayer.Stop();
+            StopVideo();
 
             videoPlayer.source = VideoSource.Url;
             videoPlayer.url = sessionData.SelectedVideoPath;
-            videoPlayer.isLooping = true;
+            videoPlayer.isLooping = false;
 
             isPrepared = false;
+            hasStarted = false;
 
             videoPlayer.prepareCompleted -= HandlePrepareCompleted;
             videoPlayer.prepareCompleted += HandlePrepareCompleted;
@@ -56,10 +66,16 @@ namespace dev.xrlab.NarraGol.Video
             Debug.Log("Preview video prepared.");
         }
 
-        public void TogglePlayPause()
+        public void PlayPreview()
         {
             if (videoPlayer == null)
                 return;
+
+            if (hasStarted)
+            {
+                Debug.LogWarning("Preview already started.");
+                return;
+            }
 
             if (!isPrepared)
             {
@@ -67,25 +83,43 @@ namespace dev.xrlab.NarraGol.Video
                 return;
             }
 
-            if (videoPlayer.isPlaying)
-            {
-                videoPlayer.Pause();
-                Debug.Log("Preview video paused.");
-            }
-            else
-            {
-                videoPlayer.Play();
-                Debug.Log("Preview video playing.");
-            }
+            hasStarted = true;
+
+            videoPlayer.Stop();
+            videoPlayer.time = 0;
+            videoPlayer.Play();
+
+            previewRoutine = StartCoroutine(PreviewDurationRoutine());
+
+            Debug.Log("Preview video started.");
+        }
+
+        private IEnumerator PreviewDurationRoutine()
+        {
+            yield return new WaitForSeconds(previewDurationSeconds);
+
+            StopVideo();
+
+            Debug.Log("Preview finished.");
+
+            OnPreviewFinished?.Invoke();
         }
 
         public void StopVideo()
         {
+            if (previewRoutine != null)
+            {
+                StopCoroutine(previewRoutine);
+                previewRoutine = null;
+            }
+
             if (videoPlayer == null)
                 return;
 
             videoPlayer.Stop();
+
             isPrepared = false;
+            hasStarted = false;
 
             Debug.Log("Preview video stopped.");
         }
