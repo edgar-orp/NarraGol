@@ -572,7 +572,7 @@ MonoBehaviour:
   microphoneMonitor: {fileID: 1228200637}
   screenCaptureRecorder: {fileID: 1385836436}
   countdownSeconds: 10
-  recordingDurationSeconds: 10
+  recordingDurationSeconds: 20
 --- !u!1 &1050687717 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
@@ -863,7 +863,8 @@ MonoBehaviour:
   ffmpegPath: ffmpeg.exe
   frameRate: 30
   microphoneDeviceName: 
-  buildWindowTitle: NarraGol
+  outputWidth: 1080
+  outputHeight: 1920
 --- !u!1 &1451097696
 GameObject:
   m_ObjectHideFlags: 0
