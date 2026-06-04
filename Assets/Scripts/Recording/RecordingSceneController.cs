@@ -1,10 +1,11 @@
-using UnityEngine;
-using UnityEngine.Video;
-using UnityEngine.SceneManagement;
+using dev.xrlab.NarraGol.Core;
+using dev.xrlab.NarraGol.UI;
+using dev.xrlab.NarraGol.Utility;
 using System.Collections;
 using System.IO;
-using dev.xrlab.NarraGol.Core;
-using dev.xrlab.NarraGol.Utility;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 namespace dev.xrlab.NarraGol.Recording
 {
@@ -23,6 +24,7 @@ namespace dev.xrlab.NarraGol.Recording
         [SerializeField] private WebcamController webcamController;
         [SerializeField] private MicrophoneMonitor microphoneMonitor;
         [SerializeField] private FFmpegScreenCaptureRecorder screenCaptureRecorder;
+        [SerializeField] private VideoThumbnailController videoThumbnailController;
 
         [Header("Recording Settings")]
         [SerializeField] private int countdownSeconds = 3;
@@ -46,6 +48,8 @@ namespace dev.xrlab.NarraGol.Recording
 
             LoadSelectedVideo();
 
+            videoThumbnailController?.LoadThumbnail();
+
             SetSelectedVideoVisible(false);
 
             Debug.Log("Recording scene initialized.");
@@ -67,21 +71,19 @@ namespace dev.xrlab.NarraGol.Recording
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(sessionData.SelectedVideoPath))
+            if (string.IsNullOrWhiteSpace(sessionData.SelectedRecordingVideoPath))
             {
-                Debug.LogError("Selected video path is empty.");
+                Debug.LogError("Selected recording video path is empty.");
                 return;
             }
 
-            selectedVideoPlayer.gameObject.SetActive(true);
-
             selectedVideoPlayer.Stop();
             selectedVideoPlayer.source = VideoSource.Url;
-            selectedVideoPlayer.url = sessionData.SelectedVideoPath;
+            selectedVideoPlayer.url = sessionData.SelectedRecordingVideoPath;
             selectedVideoPlayer.isLooping = false;
             selectedVideoPlayer.Prepare();
 
-            Debug.Log($"Recording video loaded: {sessionData.SelectedVideoPath}");
+            Debug.Log($"Recording video loaded: {sessionData.SelectedRecordingVideoPath}");
         }
 
         public void StartPreRecordingCountdown()
@@ -124,6 +126,9 @@ namespace dev.xrlab.NarraGol.Recording
 
             selectedVideoPlayer.Stop();
             selectedVideoPlayer.time = 0;
+
+            videoThumbnailController?.ShowVideoRenderTexture();
+
             selectedVideoPlayer.Play();
 
             Debug.Log("Selected video activated and playing.");

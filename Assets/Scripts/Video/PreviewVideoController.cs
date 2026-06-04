@@ -10,6 +10,8 @@ namespace dev.xrlab.NarraGol.Video
     {
         public static event Action OnPreviewFinished;
 
+        [SerializeField] private UI.VideoThumbnailController videoThumbnailController;
+
         [Header("Data")]
         [SerializeField] private NarraGolClipSessionData sessionData;
 
@@ -37,16 +39,16 @@ namespace dev.xrlab.NarraGol.Video
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(sessionData.SelectedVideoPath))
+            if (string.IsNullOrWhiteSpace(sessionData.SelectedPreviewVideoPath))
             {
-                Debug.LogError("Selected video path is empty.");
+                Debug.LogError("Selected preview video path is empty.");
                 return;
             }
 
             StopVideo();
 
             videoPlayer.source = VideoSource.Url;
-            videoPlayer.url = sessionData.SelectedVideoPath;
+            videoPlayer.url = sessionData.SelectedPreviewVideoPath;
             videoPlayer.isLooping = false;
 
             isPrepared = false;
@@ -57,7 +59,7 @@ namespace dev.xrlab.NarraGol.Video
 
             videoPlayer.Prepare();
 
-            Debug.Log($"Preparing preview video: {sessionData.SelectedVideoPath}");
+            Debug.Log($"Preparing preview video: {sessionData.SelectedPreviewVideoPath}");
         }
 
         private void HandlePrepareCompleted(VideoPlayer source)
@@ -82,6 +84,8 @@ namespace dev.xrlab.NarraGol.Video
                 Debug.LogWarning("Preview video is not prepared yet.");
                 return;
             }
+
+            videoThumbnailController?.ShowVideoRenderTexture();
 
             hasStarted = true;
 

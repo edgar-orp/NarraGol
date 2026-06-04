@@ -33,19 +33,11 @@ namespace dev.xrlab.NarraGol.UI
                 return;
             }
 
-            string selectedVideoFileName = sessionData.SelectedVideoFileName;
-
-            if (string.IsNullOrWhiteSpace(selectedVideoFileName))
-            {
-                Debug.LogError("Selected video file name is empty.");
-                return;
-            }
-
-            string index = ExtractIndex(selectedVideoFileName);
+            string index = sessionData.SelectedVideoIndex;
 
             if (string.IsNullOrWhiteSpace(index))
             {
-                Debug.LogError($"Could not extract index from video file name: {selectedVideoFileName}");
+                Debug.LogError("Selected video index is empty.");
                 return;
             }
 
@@ -59,18 +51,6 @@ namespace dev.xrlab.NarraGol.UI
             }
 
             StartCoroutine(LoadImageRoutine(imagePath));
-        }
-
-        private string ExtractIndex(string fileName)
-        {
-            string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-
-            int underscoreIndex = nameWithoutExtension.LastIndexOf('_');
-
-            if (underscoreIndex < 0 || underscoreIndex >= nameWithoutExtension.Length - 1)
-                return string.Empty;
-
-            return nameWithoutExtension.Substring(underscoreIndex + 1);
         }
 
         private IEnumerator LoadImageRoutine(string imagePath)

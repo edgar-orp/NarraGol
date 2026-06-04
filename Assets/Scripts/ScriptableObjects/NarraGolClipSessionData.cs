@@ -10,8 +10,9 @@ namespace dev.xrlab.NarraGol.Core
     public class NarraGolClipSessionData : ScriptableObject
     {
         [Header("Selected Video")]
-        [SerializeField] private string selectedVideoFileName;
-        [SerializeField] private string selectedVideoPath;
+        [SerializeField] private string selectedVideoIndex;
+        [SerializeField] private string selectedPreviewVideoPath;
+        [SerializeField] private string selectedRecordingVideoPath;
 
         [Header("Generated Audio")]
         [SerializeField] private string generatedWavPath;
@@ -19,15 +20,21 @@ namespace dev.xrlab.NarraGol.Core
         [Header("Final Video")]
         [SerializeField] private string finalVideoFileName;
 
-        public string SelectedVideoFileName => selectedVideoFileName;
-        public string SelectedVideoPath => selectedVideoPath;
+        public string SelectedVideoIndex => selectedVideoIndex;
+        public string SelectedPreviewVideoPath => selectedPreviewVideoPath;
+        public string SelectedRecordingVideoPath => selectedRecordingVideoPath;
         public string GeneratedWavPath => generatedWavPath;
         public string FinalVideoFileName => finalVideoFileName;
 
-        public void SetSelectedVideo(string videoFileName, string videoPath)
+        public void SetSelectedVideos(
+            string videoIndex,
+            string previewVideoPath,
+            string recordingVideoPath
+        )
         {
-            selectedVideoFileName = videoFileName;
-            selectedVideoPath = videoPath;
+            selectedVideoIndex = videoIndex;
+            selectedPreviewVideoPath = previewVideoPath;
+            selectedRecordingVideoPath = recordingVideoPath;
         }
 
         public void SetGeneratedWavPath(string wavPath)
@@ -42,8 +49,9 @@ namespace dev.xrlab.NarraGol.Core
 
         public void Clear()
         {
-            selectedVideoFileName = string.Empty;
-            selectedVideoPath = string.Empty;
+            selectedVideoIndex = string.Empty;
+            selectedPreviewVideoPath = string.Empty;
+            selectedRecordingVideoPath = string.Empty;
             generatedWavPath = string.Empty;
             finalVideoFileName = string.Empty;
         }

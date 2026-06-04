@@ -18,6 +18,8 @@ namespace dev.xrlab.NarraGol.Core
 
         [SerializeField] private PreviewTitleImageController previewTitleImageController;
 
+        [SerializeField] private VideoThumbnailController videoThumbnailController;
+
         [Header("Scenes")]
         [SerializeField] private string recordingSceneName = "RecordingScene";
 
@@ -58,6 +60,7 @@ namespace dev.xrlab.NarraGol.Core
             SetScreen(AppScreen.Preview);
 
             previewTitleImageController?.LoadTitleImage();
+            videoThumbnailController?.LoadThumbnail();
             previewVideoController?.LoadSelectedVideo();
         }
 

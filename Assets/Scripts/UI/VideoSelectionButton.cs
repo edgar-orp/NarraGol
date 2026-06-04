@@ -7,17 +7,22 @@ namespace dev.xrlab.NarraGol.UI
 {
     public class VideoSelectionButton : MonoBehaviour
     {
-        [Header("Video")]
-        [SerializeField] private string videoFileName;
+        [Header("Video Index")]
+        [SerializeField] private string videoIndex = "01";
+
+        [Header("File Settings")]
+        [SerializeField] private string previewPrefix = "preview_";
+        [SerializeField] private string recordingPrefix = "recording_";
+        [SerializeField] private string videoExtension = ".webm";
 
         [Header("Data")]
         [SerializeField] private NarraGolClipSessionData sessionData;
 
         public void SelectVideo()
         {
-            if (string.IsNullOrWhiteSpace(videoFileName))
+            if (string.IsNullOrWhiteSpace(videoIndex))
             {
-                Debug.LogError($"Video file name is empty on button: {gameObject.name}");
+                Debug.LogError($"Video index is empty on button: {gameObject.name}");
                 return;
             }
 
@@ -27,23 +32,40 @@ namespace dev.xrlab.NarraGol.UI
                 return;
             }
 
-            string videoPath = NarraGolPaths.GetVideoPath(videoFileName);
+            string previewFileName = $"{previewPrefix}{videoIndex}{videoExtension}";
+            string recordingFileName = $"{recordingPrefix}{videoIndex}{videoExtension}";
 
-            Debug.Log($"Trying to select video: {videoFileName}");
-            Debug.Log($"Resolved path: {videoPath}");
+            string previewVideoPath = NarraGolPaths.GetVideoPath(previewFileName);
+            string recordingVideoPath = NarraGolPaths.GetVideoPath(recordingFileName);
 
-            if (!File.Exists(videoPath))
+            Debug.Log($"Trying to select preview video: {previewFileName}");
+            Debug.Log($"Preview path: {previewVideoPath}");
+            Debug.Log($"Trying to select recording video: {recordingFileName}");
+            Debug.Log($"Recording path: {recordingVideoPath}");
+
+            if (!File.Exists(previewVideoPath))
             {
-                Debug.LogError($"Video not found: {videoPath}");
+                Debug.LogError($"Preview video not found: {previewVideoPath}");
                 return;
             }
 
-            sessionData.SetSelectedVideo(videoFileName, videoPath);
+            if (!File.Exists(recordingVideoPath))
+            {
+                Debug.LogError($"Recording video not found: {recordingVideoPath}");
+                return;
+            }
+
+            sessionData.SetSelectedVideos(
+                videoIndex,
+                previewVideoPath,
+                recordingVideoPath
+            );
 
             Debug.Log("================================");
-            Debug.Log("VIDEO SELECTED");
-            Debug.Log($"File: {videoFileName}");
-            Debug.Log($"Path: {videoPath}");
+            Debug.Log("VIDEOS SELECTED");
+            Debug.Log($"Index: {videoIndex}");
+            Debug.Log($"Preview: {previewVideoPath}");
+            Debug.Log($"Recording: {recordingVideoPath}");
             Debug.Log("================================");
         }
     }
