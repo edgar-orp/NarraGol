@@ -762,6 +762,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3164637000016014680, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: delaySeconds
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_VideoClip
       value: 
@@ -947,6 +951,7 @@ GameObject:
   - component: {fileID: 572934250}
   - component: {fileID: 572934249}
   - component: {fileID: 572934252}
+  - component: {fileID: 572934253}
   m_Layer: 5
   m_Name: SelectionNextButton (3)
   m_TagString: Untagged
@@ -1096,6 +1101,22 @@ MonoBehaviour:
   recordingPrefix: recording_
   videoExtension: .webm
   sessionData: {fileID: 11400000, guid: 8f9377d96eea58b438286e13a1fece65, type: 2}
+--- !u!114 &572934253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572934247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea58a70e97f37a4d9db241e347adfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
+  targetButton: {fileID: 572934249}
+  delaySeconds: 4
+  enableOnStart: 1
+  disableButtonOnStart: 1
 --- !u!1 &1074482592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,6 +1310,7 @@ GameObject:
   - component: {fileID: 1227355494}
   - component: {fileID: 1227355493}
   - component: {fileID: 1227355496}
+  - component: {fileID: 1227355497}
   m_Layer: 5
   m_Name: SelectionNextButton (2)
   m_TagString: Untagged
@@ -1438,6 +1460,22 @@ MonoBehaviour:
   recordingPrefix: recording_
   videoExtension: .webm
   sessionData: {fileID: 11400000, guid: 8f9377d96eea58b438286e13a1fece65, type: 2}
+--- !u!114 &1227355497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227355491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea58a70e97f37a4d9db241e347adfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
+  targetButton: {fileID: 1227355493}
+  delaySeconds: 4
+  enableOnStart: 1
+  disableButtonOnStart: 1
 --- !u!1 &1281314442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1920,7 @@ GameObject:
   - component: {fileID: 1965763254}
   - component: {fileID: 1965763253}
   - component: {fileID: 1965763256}
+  - component: {fileID: 1965763257}
   m_Layer: 5
   m_Name: SelectionNextButton (1)
   m_TagString: Untagged
@@ -2031,6 +2070,22 @@ MonoBehaviour:
   recordingPrefix: recording_
   videoExtension: .webm
   sessionData: {fileID: 11400000, guid: 8f9377d96eea58b438286e13a1fece65, type: 2}
+--- !u!114 &1965763257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965763251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea58a70e97f37a4d9db241e347adfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
+  targetButton: {fileID: 1965763253}
+  delaySeconds: 4
+  enableOnStart: 1
+  disableButtonOnStart: 1
 --- !u!1 &2043418166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1982193418120375592, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
@@ -2193,6 +2248,10 @@ PrefabInstance:
     - target: {fileID: 2715953019204369927, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164637000016014680, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
+      propertyPath: delaySeconds
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3339185075402716423, guid: 3b138bb6cf172f048a23d69e3f12f544, type: 3}
       propertyPath: m_VideoClip

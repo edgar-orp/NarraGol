@@ -25,6 +25,9 @@ namespace dev.xrlab.NarraGol.Recording
         [SerializeField] private int outputWidth = 1080;
         [SerializeField] private int outputHeight = 1920;
 
+        [Header("Audio Sync")]
+        [SerializeField] private float audioOffsetSeconds = -0.20f;
+
         private Process ffmpegProcess;
         private string currentOutputPath;
         private readonly StringBuilder ffmpegLogBuilder = new StringBuilder();
@@ -67,7 +70,7 @@ namespace dev.xrlab.NarraGol.Recording
 
             string audioInput = string.IsNullOrWhiteSpace(resolvedMicrophoneName)
                 ? string.Empty
-                : $"-f dshow -i audio=\"{resolvedMicrophoneName}\" ";
+                : $"{GetAudioOffsetArgument()}-f dshow -i audio=\"{resolvedMicrophoneName}\" ";
 
             string audioCodec = string.IsNullOrWhiteSpace(resolvedMicrophoneName)
                 ? string.Empty
@@ -124,6 +127,14 @@ namespace dev.xrlab.NarraGol.Recording
 
             UnityEngine.Debug.LogWarning("No FFmpeg microphone detected. Capture will continue without audio.");
             return string.Empty;
+        }
+
+        private string GetAudioOffsetArgument()
+        {
+            if (Mathf.Approximately(audioOffsetSeconds, 0f))
+                return string.Empty;
+
+            return $"-itsoffset {audioOffsetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)} ";
         }
 
         private string GetFirstDirectShowAudioDevice()
