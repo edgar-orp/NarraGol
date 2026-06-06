@@ -1,0 +1,19 @@
+{
+  "ffmpeg": {
+    "frameRate": 30,
+    "outputWidth": 1080,
+    "outputHeight": 1920,
+    "audioOffsetSeconds": -0.2,
+    "microphoneDeviceName": ""
+  },
+  "webcam": {
+    "preferredDeviceName": "",
+    "requestedWidth": 1080,
+    "requestedHeight": 1920,
+    "requestedFPS": 30
+  },
+  "waveform": {
+    "sensitivity": 25,
+    "smoothSpeed": 12
+  }
+}

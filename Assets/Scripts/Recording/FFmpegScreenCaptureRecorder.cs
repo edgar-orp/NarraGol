@@ -1,9 +1,11 @@
 using UnityEngine;
 using System;
+using System.Globalization;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using dev.xrlab.NarraGol.Utility;
+using dev.xrlab.NarraGol.Core;
 
 namespace dev.xrlab.NarraGol.Recording
 {
@@ -65,6 +67,8 @@ namespace dev.xrlab.NarraGol.Recording
             currentOutputPath = outputPath;
             ffmpegLogBuilder.Clear();
 
+            ApplyConfig();
+
             string videoInput = GetVideoInputArguments();
             string resolvedMicrophoneName = GetResolvedMicrophoneName();
 
@@ -96,6 +100,27 @@ namespace dev.xrlab.NarraGol.Recording
                 $"\"{outputPath}\"";
 
             StartFFmpeg(arguments);
+        }
+
+        private void ApplyConfig()
+        {
+            NarraGolRuntimeConfig config = NarraGolConfigLoader.Config;
+
+            frameRate = config.ffmpeg.frameRate;
+            outputWidth = config.ffmpeg.outputWidth;
+            outputHeight = config.ffmpeg.outputHeight;
+            audioOffsetSeconds = config.ffmpeg.audioOffsetSeconds;
+
+            if (!string.IsNullOrWhiteSpace(config.ffmpeg.microphoneDeviceName))
+                microphoneDeviceName = config.ffmpeg.microphoneDeviceName;
+
+            UnityEngine.Debug.Log("================================");
+            UnityEngine.Debug.Log("FFMPEG CONFIG APPLIED");
+            UnityEngine.Debug.Log($"Frame Rate: {frameRate}");
+            UnityEngine.Debug.Log($"Output: {outputWidth}x{outputHeight}");
+            UnityEngine.Debug.Log($"Audio Offset: {audioOffsetSeconds}");
+            UnityEngine.Debug.Log($"Microphone Override: {microphoneDeviceName}");
+            UnityEngine.Debug.Log("================================");
         }
 
         private string GetVideoInputArguments()
@@ -134,7 +159,7 @@ namespace dev.xrlab.NarraGol.Recording
             if (Mathf.Approximately(audioOffsetSeconds, 0f))
                 return string.Empty;
 
-            return $"-itsoffset {audioOffsetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)} ";
+            return $"-itsoffset {audioOffsetSeconds.ToString(CultureInfo.InvariantCulture)} ";
         }
 
         private string GetFirstDirectShowAudioDevice()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using dev.xrlab.NarraGol.Core;
 using dev.xrlab.NarraGol.Recording;
 
 namespace dev.xrlab.NarraGol.UI
@@ -28,6 +29,26 @@ namespace dev.xrlab.NarraGol.UI
 
         private void Awake()
         {
+            ApplyConfig();
+            InitializeBars();
+        }
+
+        private void ApplyConfig()
+        {
+            NarraGolRuntimeConfig config = NarraGolConfigLoader.Config;
+
+            sensitivity = config.waveform.sensitivity;
+            smoothSpeed = config.waveform.smoothSpeed;
+
+            Debug.Log("================================");
+            Debug.Log("WAVEFORM CONFIG APPLIED");
+            Debug.Log($"Sensitivity: {sensitivity}");
+            Debug.Log($"Smooth Speed: {smoothSpeed}");
+            Debug.Log("================================");
+        }
+
+        private void InitializeBars()
+        {
             if (bars == null || bars.Length == 0)
                 return;
 
@@ -52,6 +73,9 @@ namespace dev.xrlab.NarraGol.UI
                 return;
 
             if (bars == null || bars.Length == 0)
+                return;
+
+            if (currentScales == null || currentScales.Length != bars.Length)
                 return;
 
             float rawLevel = microphoneMonitor.CurrentLevel;
@@ -107,7 +131,7 @@ namespace dev.xrlab.NarraGol.UI
 
         public void ResetWaveform()
         {
-            if (bars == null)
+            if (bars == null || currentScales == null || targetScales == null)
                 return;
 
             for (int i = 0; i < bars.Length; i++)
