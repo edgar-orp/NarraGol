@@ -3,7 +3,7 @@ STARTING SCREEN CAPTURE
 FFmpeg Path: D:\Unity\xrlab.dev\NarraGol\FFmpeg\ffmpeg.exe
 Capture Target: Single fullscreen display
 Capture Size: 1080x1920
-Arguments: -y -loglevel verbose -f gdigrab -framerate 30 -video_size 1080x1920 -offset_x 0 -offset_y 0 -i desktop -itsoffset -0.2 -f dshow -i audio="Microphone (Realtek(R) Audio)" -t 20 -map 0:v:0 -map 1:a:0 -vf "scale=1080:1920" -c:v libx264 -preset veryfast -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart "D:\Unity\xrlab.dev\NarraGol\Output\narra_gol_final_20260605_175721.mp4"
+Arguments: -y -loglevel verbose -f gdigrab -framerate 30 -video_size 1080x1920 -offset_x 0 -offset_y 0 -i desktop -itsoffset -0.2 -f dshow -i audio="Microphone (Realtek(R) Audio)" -t 20 -map 0:v:0 -map 1:a:0 -vf "scale=1080:1920" -c:v libx264 -preset veryfast -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart "D:\Unity\xrlab.dev\NarraGol\Output\narra_gol_final_20260605_183055.mp4"
 ================================
 ffmpeg version N-124665-gaf4caa17a7-20260528 Copyright (c) 2000-2026 the FFmpeg developers
   built with gcc 15.2.0 (crosstool-NG 1.28.0.23_185f348)
@@ -15,7 +15,7 @@ ffmpeg version N-124665-gaf4caa17a7-20260528 Copyright (c) 2000-2026 the FFmpeg 
   libavfilter    11. 17.100 / 11. 17.100
   libswscale      9.  7.100 /  9.  7.100
   libswresample   6.  4.100 /  6.  4.100
-[in#0 @ 000002910538ed80] Capture area (0,0),(1080,1920) extends outside window area (0,0),(2720,1080)Error opening input: I/O error
+[in#0 @ 0000019ea8231000] Capture area (0,0),(1080,1920) extends outside window area (0,0),(2720,1080)Error opening input: I/O error
 Error opening input file desktop.
 Error opening input files: I/O error
 Exiting with exit code -5
