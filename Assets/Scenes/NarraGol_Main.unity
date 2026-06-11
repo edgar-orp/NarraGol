@@ -1154,7 +1154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
   targetButton: {fileID: 572934249}
-  delaySeconds: 4
+  delaySeconds: 3
   enableOnStart: 1
   disableButtonOnStart: 1
 --- !u!1 &1074482592
@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
   targetButton: {fileID: 1227355493}
-  delaySeconds: 4
+  delaySeconds: 3
   enableOnStart: 1
   disableButtonOnStart: 1
 --- !u!1 &1281314442
@@ -1592,6 +1592,54 @@ MonoBehaviour:
   previewTitleImageController: {fileID: 1641069811}
   videoThumbnailController: {fileID: 570123231}
   recordingSceneName: NarraGol_Recording
+--- !u!1 &1381709916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381709918}
+  - component: {fileID: 1381709917}
+  m_Layer: 0
+  m_Name: AppShortcutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1381709917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381709916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f3f463d53c62846ba8e88c1860d076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.Core.AppShortcutManager
+  mainSceneIndex: 0
+  enableShortcuts: 1
+  reloadKey: 114
+  quitKey: 27
+--- !u!4 &1381709918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381709916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451097696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,7 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::dev.xrlab.NarraGol.UI.DelayedButtonInteractable
   targetButton: {fileID: 1965763253}
-  delaySeconds: 4
+  delaySeconds: 3
   enableOnStart: 1
   disableButtonOnStart: 1
 --- !u!1 &2043418166 stripped
@@ -2609,3 +2657,4 @@ SceneRoots:
   - {fileID: 1074482593}
   - {fileID: 1516913122}
   - {fileID: 1857936008}
+  - {fileID: 1381709918}
